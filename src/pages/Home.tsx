@@ -14,6 +14,10 @@ import {
   Bar,
   Legend
 } from 'recharts';
+import { ComposableMap, Geographies, Geography } from "react-simple-maps";
+import mapboxgl from 'mapbox-gl';
+import { useEffect, useRef } from 'react';
+import 'mapbox-gl/dist/mapbox-gl.css';
 
 const performanceData = [
   { month: 'Jan', revenue: 1000, growth: 800, expenses: 600 },
@@ -38,9 +42,111 @@ const stats = [
   { label: 'Client Satisfaction', value: '98%', icon: LineChart },
 ];
 
+
+
+// Use environment variable for the token
+mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_TOKEN || '';
+
+const clientCountries = ["Saudi Arabia", "United Arab Emirates", "Canada"];
+
 export function Home() {
   const { scrollY } = useScroll();
   const y = useTransform(scrollY, [0, 500], [0, 200]);
+  const mapContainer = useRef<HTMLDivElement>(null);
+  const map = useRef<mapboxgl.Map | null>(null);
+
+  useEffect(() => {
+    if (!map.current && mapContainer.current) {
+      map.current = new mapboxgl.Map({
+        container: mapContainer.current,
+        style: 'mapbox://styles/mapbox/dark-v11',
+        center: [0, 30],
+        zoom: 1.5,
+        projection: 'mercator'
+      });
+
+      map.current.on('load', () => {
+        // Add source for country boundaries
+        map.current?.addSource('countries', {
+          type: 'vector',
+          url: 'mapbox://mapbox.country-boundaries-v1'
+        });
+
+        // Add fill layer for client countries
+        map.current?.addLayer({
+          id: 'country-fills',
+          type: 'fill',
+          source: 'countries',
+          'source-layer': 'country_boundaries',
+          paint: {
+            'fill-color': '#3b82f6',
+            'fill-opacity': [
+              'case',
+              ['in', ['get', 'name_en'], ['literal', clientCountries]],
+              0.4,
+              0
+            ]
+          }
+        });
+
+        // Add outline layer for client countries
+        map.current?.addLayer({
+          id: 'country-borders',
+          type: 'line',
+          source: 'countries',
+          'source-layer': 'country_boundaries',
+          paint: {
+            'line-color': '#60a5fa',
+            'line-width': [
+              'case',
+              ['in', ['get', 'name_en'], ['literal', clientCountries]],
+              2,
+              0
+            ]
+          }
+        });
+
+        // Add hover effect
+        map.current?.on('mouseenter', 'country-fills', () => {
+          if (map.current) {
+            map.current.setPaintProperty('country-fills', 'fill-opacity', [
+              'case',
+              ['in', ['get', 'name_en'], ['literal', clientCountries]],
+              0.7,
+              0
+            ]);
+            map.current.getCanvas().style.cursor = 'pointer';
+          }
+        });
+
+        map.current?.on('mouseleave', 'country-fills', () => {
+          if (map.current) {
+            map.current.setPaintProperty('country-fills', 'fill-opacity', [
+              'case',
+              ['in', ['get', 'name_en'], ['literal', clientCountries]],
+              0.4,
+              0
+            ]);
+            map.current.getCanvas().style.cursor = '';
+          }
+        });
+      });
+    }
+
+    return () => {
+      if (map.current) {
+        map.current.remove();
+        map.current = null;
+      }
+    };
+  }, []);
+
+  // Client data for the legend
+  const clientData = {
+    "Saudi Arabia": 150,
+    "United Arab Emirates": 120,
+    "Canada": 200
+  };
 
   return (
     <div className="w-full">
@@ -56,7 +162,7 @@ export function Home() {
             loop
             className="object-cover w-full h-full opacity-40"
           >
-            <source src="/finance.mp4" type="video/mp4" />
+            <source src="/video.mp4" type="video/mp4" />
           </video>
         </motion.div>
         
@@ -83,19 +189,7 @@ export function Home() {
             transition={{ duration: 0.8, delay: 0.4 }}
             className="flex gap-4 justify-center"
           >
-            <Button
-              size="lg"
-              className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-semibold"
-            >
-              Get Started <ArrowRight className="ml-2" />
-            </Button>
-            <Button
-              size="lg"
-              variant="outline"
-              className="border-2 border-blue-400 text-blue-400 hover:bg-blue-400 hover:text-black font-semibold"
-            >
-              Learn More
-            </Button>
+           
           </motion.div>
         </div>
       </section>
@@ -189,6 +283,41 @@ export function Home() {
                 <p className="text-gray-300">{stat.label}</p>
               </Card>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Global Presence Section */}
+      <section className="py-24 bg-black/80">
+        <div className="container mx-auto px-4">
+          <h2 className="text-4xl font-bold text-center mb-16 text-white">
+            Our Global Presence
+          </h2>
+          
+          <div 
+            ref={mapContainer} 
+            className="w-full h-[600px] rounded-lg overflow-hidden border border-gray-800"
+          />
+
+          {/* Client Country Legend */}
+          <div className="mt-8 grid grid-cols-3 gap-4 max-w-2xl mx-auto">
+            {Object.entries(clientData).map(([country, clients]) => (
+              <div 
+                key={country} 
+                className="p-4 bg-blue-500/20 border border-blue-500/50 rounded-lg text-center"
+              >
+                <h3 className="text-lg font-semibold text-white">{country}</h3>
+                {/* <p className="text-blue-300">{clients} Clients</p> */}
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-8 text-center">
+            <p className="text-gray-300 max-w-2xl mx-auto">
+              Our global network spans across multiple continents, serving clients in key financial markets. 
+              With strong presence in the Middle East and North America, we continue to expand our reach 
+              while maintaining excellence in service delivery.
+            </p>
           </div>
         </div>
       </section>

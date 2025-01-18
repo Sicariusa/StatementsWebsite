@@ -25,8 +25,8 @@ const contactInfo = [
 
 export function Contact() {
   return (
-    <div className="pt-24 min-h-screen">
-      <div className="container mx-auto px-4">
+    <div className="relative min-h-screen w-full">
+      <div className="container mx-auto px-4 py-24">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
