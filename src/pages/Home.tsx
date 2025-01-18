@@ -18,7 +18,6 @@ import {  Geography } from "react-simple-maps";
 import mapboxgl from 'mapbox-gl';
 import { useEffect, useRef } from 'react';
 import 'mapbox-gl/dist/mapbox-gl.css';
-import { useMapToken } from '@/contexts/MapContext';
 
 const performanceData = [
   { month: 'Jan', revenue: 1000, growth: 800, expenses: 600 },
@@ -45,9 +44,8 @@ const stats = [
 
 
 
-
-// Set Mapbox token
-const token = useMapToken();
+// Use environment variable for the token
+mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_TOKEN || '';
 
 const clientCountries = ["Saudi Arabia", "United Arab Emirates", "Canada"];
 
@@ -58,15 +56,6 @@ export function Home() {
   const map = useRef<mapboxgl.Map | null>(null);
 
   useEffect(() => {
-    if (!token) {
-      console.error('Mapbox token is not available');
-      return;
-    }
-
-    if (map.current) return;
-
-    mapboxgl.accessToken = token;
-    
     if (!map.current && mapContainer.current) {
       map.current = new mapboxgl.Map({
         container: mapContainer.current,
