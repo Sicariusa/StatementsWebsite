@@ -54,9 +54,9 @@ export function Home() {
             autoPlay
             muted
             loop
-            className="object-cover w-full h-full opacity-30"
+            className="object-cover w-full h-full opacity-40"
           >
-            <source src="https://cdn.coverr.co/videos/coverr-a-business-graph-going-up-2741/1080p.mp4" type="video/mp4" />
+            <source src="/finance.mp4" type="video/mp4" />
           </video>
         </motion.div>
         
@@ -65,7 +65,7 @@ export function Home() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="text-7xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400"
+            className="text-7xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-white to-white"
           >
             Elevate Your Financial Future
           </motion.h1>
@@ -73,7 +73,7 @@ export function Home() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-2xl mb-8 text-gray-300"
+            className="text-2xl mb-8 text-gray-200"
           >
             Premium financial services tailored to your success
           </motion.p>
@@ -85,14 +85,14 @@ export function Home() {
           >
             <Button
               size="lg"
-              className="bg-gradient-to-r from-amber-500 to-amber-700 hover:from-amber-600 hover:to-amber-800 text-black"
+              className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-semibold"
             >
               Get Started <ArrowRight className="ml-2" />
             </Button>
             <Button
               size="lg"
               variant="outline"
-              className="border-white text-white hover:bg-white hover:text-black"
+              className="border-2 border-blue-400 text-blue-400 hover:bg-blue-400 hover:text-black font-semibold"
             >
               Learn More
             </Button>
@@ -101,9 +101,11 @@ export function Home() {
       </section>
 
       {/* Analytics Section */}
-      <section className="py-24">
+      <section className="py-24 bg-black/80">
         <div className="container mx-auto px-4">
-          <h2 className="text-4xl font-bold text-center mb-16 text-white">Performance Analytics</h2>
+          <h2 className="text-4xl font-bold text-center mb-16 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-600">
+            Performance Analytics
+          </h2>
           
           <div className="grid gap-8 mb-16">
             <Card className="p-6 bg-black/50 border-gray-800">
@@ -113,12 +115,12 @@ export function Home() {
                   <AreaChart data={performanceData}>
                     <defs>
                       <linearGradient id="colorRevenue" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="#FFD700" stopOpacity={0.8}/>
-                        <stop offset="95%" stopColor="#FFD700" stopOpacity={0}/>
+                        <stop offset="5%" stopColor="#60A5FA" stopOpacity={0.8}/>
+                        <stop offset="95%" stopColor="#60A5FA" stopOpacity={0}/>
                       </linearGradient>
                       <linearGradient id="colorGrowth" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="#10B981" stopOpacity={0.8}/>
-                        <stop offset="95%" stopColor="#10B981" stopOpacity={0}/>
+                        <stop offset="5%" stopColor="#C084FC" stopOpacity={0.8}/>
+                        <stop offset="95%" stopColor="#C084FC" stopOpacity={0}/>
                       </linearGradient>
                     </defs>
                     <CartesianGrid strokeDasharray="3 3" stroke="#333" />
@@ -134,14 +136,14 @@ export function Home() {
                     <Area
                       type="monotone"
                       dataKey="revenue"
-                      stroke="#FFD700"
+                      stroke="#60A5FA"
                       fillOpacity={1}
                       fill="url(#colorRevenue)"
                     />
                     <Area
                       type="monotone"
                       dataKey="growth"
-                      stroke="#10B981"
+                      stroke="#C084FC"
                       fillOpacity={1}
                       fill="url(#colorGrowth)"
                     />
@@ -166,9 +168,9 @@ export function Home() {
                       }}
                     />
                     <Legend />
-                    <Bar dataKey="stocks" fill="#FFD700" />
-                    <Bar dataKey="bonds" fill="#10B981" />
-                    <Bar dataKey="crypto" fill="#6366F1" />
+                    <Bar dataKey="stocks" fill="#60A5FA" />
+                    <Bar dataKey="bonds" fill="#C084FC" />
+                    <Bar dataKey="crypto" fill="#818CF8" />
                   </BarChart>
                 </ResponsiveContainer>
               </div>
@@ -180,11 +182,11 @@ export function Home() {
             {stats.map((stat) => (
               <Card
                 key={stat.label}
-                className="p-6 bg-black/50 border-gray-800 hover:border-amber-500 transition-colors"
+                className="p-6 bg-black/50 border-gray-800 hover:border-blue-500 transition-colors"
               >
-                <stat.icon className="w-8 h-8 mb-4 text-amber-500" />
+                <stat.icon className="w-8 h-8 mb-4 text-blue-500" />
                 <h3 className="text-3xl font-bold mb-2 text-white">{stat.value}</h3>
-                <p className="text-gray-400">{stat.label}</p>
+                <p className="text-gray-300">{stat.label}</p>
               </Card>
             ))}
           </div>

@@ -21,7 +21,7 @@ export function Navbar() {
       <nav className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8" aria-label="Global">
         <div className="flex lg:flex-1">
           <Link to="/" className="-m-1.5 p-1.5 text-xl font-bold text-white">
-            CAPITAL<span className="text-gold-500">EDGE</span>
+            STATEMENTS<span className="text-gold-500"></span>
           </Link>
         </div>
         <div className="flex lg:hidden">
@@ -47,11 +47,7 @@ export function Navbar() {
             </Link>
           ))}
         </div>
-        <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-          <Button variant="outline" className="text-white border-white hover:bg-white hover:text-black">
-            Client Portal
-          </Button>
-        </div>
+       
       </nav>
       <div className={cn(
         "lg:hidden",
