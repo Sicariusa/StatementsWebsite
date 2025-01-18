@@ -2,6 +2,7 @@ import { Suspense, lazy } from 'react';
 import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import { Navbar } from '@/components/Navbar';
 import { Loader } from '@/components/ui/loader';
+import { MapProvider } from '@/contexts/MapContext';
 
 // Lazy load pages
 const Home = lazy(() => import('@/pages/Home').then(module => ({ default: module.Home })));
@@ -12,24 +13,26 @@ const Contact = lazy(() => import('@/pages/Contact').then(module => ({ default: 
 
 function App() {
   return (
-    <Router>
-      <div className="min-h-screen bg-gradient-to-b from-[#0A0A0A] to-[#1A1A1A]">
-        <Navbar />
-        <Suspense fallback={
-          <div className="flex items-center justify-center min-h-[80vh]">
-            <Loader className="w-8 h-8 text-amber-500" />
-          </div>
-        }>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/services" element={<Services />} />
-            <Route path="/clients" element={<Clients />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/contact" element={<Contact />} />
-          </Routes>
-        </Suspense>
-      </div>
-    </Router>
+    <MapProvider>
+      <Router>
+        <div className="min-h-screen bg-gradient-to-b from-[#0A0A0A] to-[#1A1A1A]">
+          <Navbar />
+          <Suspense fallback={
+            <div className="flex items-center justify-center min-h-[80vh]">
+              <Loader className="w-8 h-8 text-amber-500" />
+            </div>
+          }>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/services" element={<Services />} />
+              <Route path="/clients" element={<Clients />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/contact" element={<Contact />} />
+            </Routes>
+          </Suspense>
+        </div>
+      </Router>
+    </MapProvider>
   );
 }
 
