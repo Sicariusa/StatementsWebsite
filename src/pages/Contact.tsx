@@ -4,6 +4,8 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import emailjs from '@emailjs/browser';
+import { useState } from 'react';
 
 const contactInfo = [
   {
@@ -24,6 +26,30 @@ const contactInfo = [
 ];
 
 export function Contact() {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    try {
+      await emailjs.sendForm(
+        import.meta.env.VITE_EMAILJS_SERVICE_ID,
+        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+        e.currentTarget,
+        import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+      );
+      
+      alert('Message sent successfully!');
+      (e.target as HTMLFormElement).reset();
+    } catch (error) {
+      console.error('Error sending email:', error);
+      alert('Failed to send message. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <div className="relative min-h-screen w-full">
       <div className="container mx-auto px-4 py-24">
@@ -49,54 +75,65 @@ export function Contact() {
           >
             <Card className="p-8 bg-black/50 border-gray-800">
               <h2 className="text-2xl font-bold mb-6 text-white">Send us a message</h2>
-              <form className="space-y-6">
+              <form className="space-y-6" onSubmit={handleSubmit}>
                 <div className="grid md:grid-cols-2 gap-4">
                   <div className="space-y-2">
                     <label className="text-sm font-medium text-gray-300">First Name</label>
                     <Input
+                      name="firstName"
                       type="text"
                       placeholder="John"
                       className="bg-black/30 border-gray-700 text-white placeholder:text-gray-500"
+                      required
                     />
                   </div>
                   <div className="space-y-2">
                     <label className="text-sm font-medium text-gray-300">Last Name</label>
                     <Input
+                      name="lastName"
                       type="text"
                       placeholder="Doe"
                       className="bg-black/30 border-gray-700 text-white placeholder:text-gray-500"
+                      required
                     />
                   </div>
                 </div>
                 <div className="space-y-2">
                   <label className="text-sm font-medium text-gray-300">Email</label>
                   <Input
+                    name="email"
                     type="email"
                     placeholder="john@example.com"
                     className="bg-black/30 border-gray-700 text-white placeholder:text-gray-500"
+                    required
                   />
                 </div>
                 <div className="space-y-2">
                   <label className="text-sm font-medium text-gray-300">Phone</label>
                   <Input
+                    name="phone"
                     type="tel"
                     placeholder="+1 (555) 000-0000"
                     className="bg-black/30 border-gray-700 text-white placeholder:text-gray-500"
+                    required
                   />
                 </div>
                 <div className="space-y-2">
                   <label className="text-sm font-medium text-gray-300">Message</label>
                   <Textarea
+                    name="message"
                     placeholder="How can we help you?"
                     className="bg-black/30 border-gray-700 text-white placeholder:text-gray-500"
                     rows={4}
+                    required
                   />
                 </div>
                 <Button
                   type="submit"
                   className="w-full bg-gradient-to-r from-amber-500 to-amber-700 hover:from-amber-600 hover:to-amber-800 text-black"
+                  disabled={isSubmitting}
                 >
-                  Send Message
+                  {isSubmitting ? 'Sending...' : 'Send Message'}
                 </Button>
               </form>
             </Card>
