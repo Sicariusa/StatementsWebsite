@@ -18,5 +18,8 @@
   ],
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
-  "framework": "vite"
+  "framework": "vite",
+  "env": {
+    "VITE_MAPBOX_TOKEN": "@vite_mapbox_token"
+  }
 } 
