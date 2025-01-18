@@ -20,6 +20,6 @@
   "outputDirectory": "dist",
   "framework": "vite",
   "env": {
-    "VITE_MAPBOX_TOKEN": "@vite_mapbox_token"
+    "VITE_MAPBOX_TOKEN": "@VITE_MAPBOX_TOKEN"
   }
 } 
