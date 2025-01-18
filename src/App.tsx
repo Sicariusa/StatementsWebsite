@@ -1,8 +1,7 @@
 import { Suspense, lazy } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import { Navbar } from '@/components/Navbar';
-import { Loader } from 'lucide-react';
-
+import { Loader } from '@/components/ui/loader';
 
 // Lazy load pages
 const Home = lazy(() => import('@/pages/Home').then(module => ({ default: module.Home })));

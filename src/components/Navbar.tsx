@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, NavLink } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
@@ -35,16 +35,15 @@ export function Navbar() {
         </div>
         <div className="hidden lg:flex lg:gap-x-12">
           {navigation.map((item) => (
-            <Link
+            <NavLink
               key={item.name}
               to={item.href}
-              className={cn(
-                "text-sm font-semibold leading-6 text-white hover:text-gold-500 transition-colors",
-                location.pathname === item.href && "text-gold-500"
-              )}
+              className={({ isActive }) => 
+                isActive ? "text-amber-500" : "text-gray-300 hover:text-amber-500"
+              }
             >
               {item.name}
-            </Link>
+            </NavLink>
           ))}
         </div>
        
