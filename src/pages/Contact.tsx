@@ -31,8 +31,32 @@ const validateName = (name: string): boolean => {
   return /^[a-zA-Z\s]{2,50}$/.test(name.trim());
 };
 
+const VALID_EMAIL_DOMAINS = [
+  'gmail.com',
+  'yahoo.com',
+  'outlook.com',
+  'hotmail.com',
+  'aol.com',
+  'icloud.com',
+  'proton.me',
+  'protonmail.com',
+  'mail.com',
+  'zoho.com',
+  'live.com',
+  'msn.com'
+];
+
 const validateEmail = (email: string): boolean => {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
+  // First check basic email format
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) {
+    return false;
+  }
+
+  // Extract domain from email
+  const domain = email.trim().split('@')[1].toLowerCase();
+
+  // Check if domain is in our list of valid providers
+  return VALID_EMAIL_DOMAINS.includes(domain);
 };
 
 const validatePhone = (phone: string): boolean => {
@@ -61,8 +85,9 @@ export function Contact() {
   // Anti-spam: Allow only one submission per 2 days
   const canSubmit = (): boolean => {
     const now = Date.now();
-    const twoDays = 2 * 24 * 60 * 60 * 1000; // 2 days in milliseconds
-    if (now - lastSubmissionTime < twoDays) {
+    // const twoDays = 2 * 24 * 60 * 60 * 1000; // 2 days in milliseconds
+    const oneMinute = 60 * 1000; // 1 minute in milliseconds
+    if (now - lastSubmissionTime < oneMinute) {
       Swal.fire({
         icon: 'error',
         title: 'Please wait',
@@ -96,7 +121,7 @@ export function Contact() {
       newErrors.lastName = 'Please enter a valid last name (2-50 characters, letters only)';
     }
     if (!validateEmail(email)) {
-      newErrors.email = 'Please enter a valid email address';
+      newErrors.email = 'Please use a valid email from a major provider (Gmail, Yahoo, Outlook, etc.)';
     }
     if (!validatePhone(phone)) {
       newErrors.phone = 'Please enter a valid phone number';
@@ -104,7 +129,7 @@ export function Contact() {
     if (!validateMessage(message)) {
       newErrors.message = 'Message must be between 10 and 1000 characters';
     }
-    if (!validateFile(selectedFile)) {
+    if (selectedFile && !validateFile(selectedFile)) {
       newErrors.file = 'Please upload a PDF file under 5MB';
     }
 
