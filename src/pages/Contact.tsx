@@ -81,17 +81,14 @@ export function Contact() {
   const formRef = useRef<HTMLFormElement>(null);
   const [lastSubmissionTime, setLastSubmissionTime] = useState<number>(0);
 
-  // Anti-spam: Allow only one submission per minute
-  // Anti-spam: Allow only one submission per 2 days
   const canSubmit = (): boolean => {
     const now = Date.now();
-    // const twoDays = 2 * 24 * 60 * 60 * 1000; // 2 days in milliseconds
-    const oneMinute = 60 * 1000; // 1 minute in milliseconds
+    const oneMinute = 60 * 1000;
     if (now - lastSubmissionTime < oneMinute) {
       Swal.fire({
         icon: 'error',
         title: 'Please wait',
-        text: 'You can only submit once every 2 days',
+        text: 'You can only submit once per minute',
         timer: 3000,
         showConfirmButton: false
       });
@@ -99,7 +96,6 @@ export function Contact() {
     }
     return true;
   };
-
 
   const sanitizeInput = (input: string): string => {
     return input.trim().replace(/[<>]/g, ''); // Basic XSS prevention
@@ -178,27 +174,29 @@ export function Contact() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    if (!canSubmit()) {
-      return;
-    }
+    if (!canSubmit()) return;
 
     const formData = new FormData(e.currentTarget);
-    
-    if (!validateForm(formData)) {
-      return;
-    }
+    if (!validateForm(formData)) return;
 
     setIsSubmitting(true);
 
     try {
-      await emailjs.sendForm(
+      // Use sanitizeInput when sending data
+      await emailjs.send(
         import.meta.env.VITE_EMAILJS_SERVICE_ID,
         import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
-        e.currentTarget,
+        {
+          firstName: sanitizeInput(formData.get('firstName') as string),
+          lastName: sanitizeInput(formData.get('lastName') as string),
+          email: sanitizeInput(formData.get('email') as string),
+          phone: sanitizeInput(formData.get('phone') as string),
+          message: sanitizeInput(formData.get('message') as string),
+          pdf_attachment: selectedFile ? await convertFileToBase64(selectedFile) : ''
+        },
         import.meta.env.VITE_EMAILJS_PUBLIC_KEY
       );
-      
+
       setLastSubmissionTime(Date.now());
       
       await Swal.fire({
@@ -219,12 +217,6 @@ export function Contact() {
       formRef.current?.reset();
       setSelectedFile(null);
       setErrors({});
-      
-      // Remove hidden input if exists
-      const hiddenInput = formRef.current?.querySelector('input[name="pdf_attachment"]');
-      if (hiddenInput) {
-        hiddenInput.remove();
-      }
     } catch (error) {
       console.error('Error sending email:', error);
       await Swal.fire({

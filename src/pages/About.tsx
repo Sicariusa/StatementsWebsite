@@ -116,7 +116,7 @@ export function About() {
         >
           <h2 className="text-3xl font-bold mb-8 text-center text-white">Our Values</h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {values.map((value, index) => (
+            {values.map((value) => (
               <Card
                 key={value.title}
                 className="p-6 bg-black/50 border-gray-800 hover:border-amber-500 transition-all duration-300"
@@ -136,7 +136,7 @@ export function About() {
         >
           <h2 className="text-3xl font-bold mb-8 text-center text-white">Leadership Team</h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {team.map((member, index) => (
+            {team.map((member) => (
               <Card
                 key={member.name}
                 className="p-6 bg-black/50 border-gray-800 hover:border-amber-500 transition-all duration-300"

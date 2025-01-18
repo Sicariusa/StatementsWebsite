@@ -1,6 +1,6 @@
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { ArrowRight, BarChart3, TrendingUp, PieChart, LineChart } from 'lucide-react';
-import { Button } from "@/components/ui/button";
+import {  BarChart3, TrendingUp, PieChart, LineChart } from 'lucide-react';
+
 import { Card } from "@/components/ui/card";
 import {
   AreaChart,
@@ -14,7 +14,7 @@ import {
   Bar,
   Legend
 } from 'recharts';
-import { ComposableMap, Geographies, Geography } from "react-simple-maps";
+import {  Geography } from "react-simple-maps";
 import mapboxgl from 'mapbox-gl';
 import { useEffect, useRef } from 'react';
 import 'mapbox-gl/dist/mapbox-gl.css';
@@ -301,14 +301,37 @@ export function Home() {
 
           {/* Client Country Legend */}
           <div className="mt-8 grid grid-cols-3 gap-4 max-w-2xl mx-auto">
-            {Object.entries(clientData).map(([country, clients]) => (
-              <div 
-                key={country} 
-                className="p-4 bg-blue-500/20 border border-blue-500/50 rounded-lg text-center"
-              >
-                <h3 className="text-lg font-semibold text-white">{country}</h3>
-                {/* <p className="text-blue-300">{clients} Clients</p> */}
-              </div>
+            {Object.entries(clientData).map(([country]) => (
+              <Geography
+                key={country}
+                geography={country}
+                fill="#3b82f6"
+                stroke="#60a5fa"
+                strokeWidth={0.5}
+                style={{
+                  default: {
+                    fill: '#3b82f6',
+                    fillOpacity: 0.4,
+                    stroke: '#60a5fa',
+                    strokeWidth: 0.5,
+                    strokeOpacity: 1,
+                  },
+                  hover: {
+                    fill: '#60a5fa',
+                    fillOpacity: 0.7,
+                    stroke: '#60a5fa',
+                    strokeWidth: 1,
+                    strokeOpacity: 1,
+                  },
+                  pressed: {
+                    fill: '#60a5fa',
+                    fillOpacity: 0.7,
+                    stroke: '#60a5fa',
+                    strokeWidth: 1,
+                    strokeOpacity: 1,
+                  },
+                }}
+              />
             ))}
           </div>
 
