@@ -19,7 +19,7 @@ export default defineConfig({
             '@/components/ui/button',
             '@/components/ui/card',
             '@/components/ui/input',
-            '@/components/ui/textarea'
+            '@/components/ui/textarea',
           ],
           'animations': ['framer-motion'],
           'icons': ['lucide-react'],
@@ -29,5 +29,14 @@ export default defineConfig({
     },
     chunkSizeWarningLimit: 1000,
     sourcemap: true
-  }
+  },
+  server: {
+    // Allow CORS for Mapbox API
+    cors: true,
+  },
+  define: {
+    'process.env': {
+      VITE_MAPBOX_TOKEN: process.env.VITE_MAPBOX_TOKEN,
+    },
+  },
 });
