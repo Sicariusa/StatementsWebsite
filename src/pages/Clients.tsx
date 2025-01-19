@@ -76,7 +76,7 @@ export function Clients() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
             >
-              <Card className="p-6 bg-black/50 border-gray-800 hover:border-amber-500 transition-all duration-300">
+              <Card className="card-hover-effect p-6">
                 <div className="aspect-square mb-4 overflow-hidden rounded-lg">
                   <img
                     src={client.logo}
@@ -85,7 +85,7 @@ export function Clients() {
                   />
                 </div>
                 <div className="flex items-center gap-2 mb-2">
-                  <Building2 className="w-5 h-5 text-amber-500" />
+                  <Building2 className="w-5 h-5 text-[#0066FF]" />
                   <span className="text-sm text-amber-500">{client.industry}</span>
                 </div>
                 <h3 className="text-xl font-bold mb-2 text-white">{client.name}</h3>
@@ -99,7 +99,7 @@ export function Clients() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.3 }}
-          className="bg-black/50 border border-gray-800 rounded-lg p-8 mb-16"
+          className="bg-gradient-futuristic border border-[#1E90FF]/20 rounded-lg p-8 mb-16"
         >
           <h2 className="text-3xl font-bold mb-8 text-center text-white">Key Achievements</h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">

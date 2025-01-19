@@ -1,0 +1,208 @@
+/* Premium Financial Theme */
+:root[data-theme="premium"] {
+  /* Core colors */
+  --background: 222 47% 4%; /* Deep navy black */
+  --foreground: 0 0% 100%;
+  --accent-primary: 215 100% 69%; /* Electric blue #4D9FFF */
+  --accent-secondary: 229 96% 64%; /* Royal blue #4D6FFF */
+  --accent-success: 159 65% 45%; /* Emerald #26A69A */
+  --accent-warning: 36 100% 64%; /* Warm gold #FFB347 */
+  
+  /* UI colors */
+  --card: 222 45% 7%;
+  --card-foreground: 0 0% 100%;
+  --muted: 215 25% 27%;
+  --muted-foreground: 215 20% 65%;
+  --border: 215 25% 27%;
+  --input: 215 25% 27%;
+}
+
+/* Sophisticated animations */
+@keyframes gradientFlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+@keyframes pulseGlow {
+  0% { box-shadow: 0 0 5px rgba(77, 159, 255, 0.5); }
+  50% { box-shadow: 0 0 20px rgba(77, 159, 255, 0.8); }
+  100% { box-shadow: 0 0 5px rgba(77, 159, 255, 0.5); }
+}
+
+/* Premium card styling */
+[data-theme="premium"] .card-premium {
+  background: linear-gradient(
+    165deg,
+    hsl(222 47% 7%),
+    hsl(222 47% 4%)
+  );
+  border: 1px solid rgba(77, 159, 255, 0.1);
+  backdrop-filter: blur(10px);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+[data-theme="premium"] .card-premium::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(77, 159, 255, 0.1),
+    transparent
+  );
+  transition: 0.5s;
+}
+
+[data-theme="premium"] .card-premium:hover {
+  transform: translateY(-5px);
+  border-color: rgba(77, 159, 255, 0.3);
+  box-shadow: 
+    0 10px 30px -10px rgba(77, 159, 255, 0.3),
+    0 0 0 1px rgba(77, 159, 255, 0.2);
+}
+
+[data-theme="premium"] .card-premium:hover::before {
+  animation: shimmer 1.5s ease-in-out;
+}
+
+/* Button styles */
+[data-theme="premium"] .btn-premium {
+  background: linear-gradient(
+    135deg,
+    hsl(215 100% 69%),
+    hsl(229 96% 64%)
+  );
+  border: none;
+  position: relative;
+  transition: all 0.3s ease;
+  overflow: hidden;
+  box-shadow: 0 4px 15px -3px rgba(77, 159, 255, 0.2);
+}
+
+[data-theme="premium"] .btn-premium::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transform: translateX(-100%);
+  transition: 0.5s;
+}
+
+[data-theme="premium"] .btn-premium:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 25px -5px rgba(77, 159, 255, 0.4);
+}
+
+[data-theme="premium"] .btn-premium:hover::before {
+  transform: translateX(100%);
+}
+
+/* Text gradients */
+[data-theme="premium"] .text-gradient-premium {
+  background: linear-gradient(
+    135deg,
+    hsl(215 100% 69%),
+    hsl(229 96% 64%)
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Navigation link effects */
+[data-theme="premium"] .nav-link-premium {
+  position: relative;
+  color: hsl(215 20% 65%);
+  transition: color 0.3s ease;
+}
+
+[data-theme="premium"] .nav-link-premium::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    hsl(215 100% 69%),
+    hsl(229 96% 64%)
+  );
+  transition: width 0.3s ease;
+}
+
+[data-theme="premium"] .nav-link-premium:hover {
+  color: white;
+}
+
+[data-theme="premium"] .nav-link-premium:hover::after {
+  width: 100%;
+}
+
+/* Stats and numbers animation */
+[data-theme="premium"] .animate-value {
+  animation: pulseGlow 2s infinite;
+  transition: color 0.3s ease;
+}
+
+/* Section backgrounds */
+[data-theme="premium"] .section-gradient {
+  background: linear-gradient(
+    165deg,
+    hsl(222 47% 7%),
+    hsl(222 47% 4%),
+    hsl(222 47% 2%)
+  );
+  background-size: 200% 200%;
+  animation: gradientFlow 15s ease infinite;
+}
+
+/* Scrollbar styling */
+[data-theme="premium"] ::-webkit-scrollbar {
+  width: 8px;
+}
+
+[data-theme="premium"] ::-webkit-scrollbar-track {
+  background: hsl(222 47% 4%);
+}
+
+[data-theme="premium"] ::-webkit-scrollbar-thumb {
+  background: linear-gradient(
+    hsl(215 100% 69%),
+    hsl(229 96% 64%)
+  );
+  border-radius: 4px;
+}
+
+[data-theme="premium"] ::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(
+    hsl(229 96% 64%),
+    hsl(215 100% 69%)
+  );
+}
+
+/* Selection styling */
+[data-theme="premium"] ::selection {
+  background: hsl(215 100% 69%);
+  color: white;
+} 

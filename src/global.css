@@ -1,0 +1,260 @@
+@import 'mapbox-gl/dist/mapbox-gl.css';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Cyberpunk color palette */
+  --background: 0 0% 5%; /* Near black */
+  --foreground: 0 0% 100%;
+  
+  /* Neon accent colors */
+  --accent-primary: 286 100% 64%; /* Neon Purple #C042FF */
+  --accent-secondary: 196 100% 53%; /* Cyber Blue #00C8FF */
+  --accent-tertiary: 326 100% 60%; /* Hot Pink #FF2E9A */
+  
+  /* Dark theme specific */
+  --card: 235 35% 5%;
+  --card-foreground: 0 0% 100%;
+  --popover: 235 35% 5%;
+  --popover-foreground: 0 0% 100%;
+  --muted: 235 35% 15%;
+  --muted-foreground: 235 10% 75%;
+  --border: 235 35% 15%;
+  --input: 235 35% 15%;
+}
+
+/* Cyberpunk text effect */
+.text-cyber {
+  text-shadow: 0 0 10px rgba(192, 66, 255, 0.8),
+               0 0 20px rgba(192, 66, 255, 0.4),
+               0 0 30px rgba(192, 66, 255, 0.1);
+}
+
+.text-cyber-blue {
+  text-shadow: 0 0 10px rgba(0, 200, 255, 0.8),
+               0 0 20px rgba(0, 200, 255, 0.4),
+               0 0 30px rgba(0, 200, 255, 0.1);
+}
+
+/* Cyberpunk gradient text */
+.text-gradient-cyber {
+  background: linear-gradient(
+    to right,
+    #C042FF,
+    #00C8FF,
+    #FF2E9A
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: textShift 8s linear infinite;
+}
+
+/* Glitch effect */
+.glitch-effect {
+  position: relative;
+  animation: glitch 3s infinite;
+}
+
+.glitch-effect::before,
+.glitch-effect::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.glitch-effect::before {
+  left: 2px;
+  text-shadow: -2px 0 #00C8FF;
+  clip: rect(24px, 550px, 90px, 0);
+  animation: glitch-anim 3s infinite linear alternate-reverse;
+}
+
+.glitch-effect::after {
+  left: -2px;
+  text-shadow: -2px 0 #FF2E9A;
+  clip: rect(85px, 550px, 140px, 0);
+  animation: glitch-anim 2s infinite linear alternate-reverse;
+}
+
+/* Card styles */
+.card-cyber {
+  position: relative;
+  background: linear-gradient(145deg, rgba(20, 20, 25, 0.9), rgba(10, 10, 15, 0.95));
+  border: 1px solid rgba(192, 66, 255, 0.1);
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.card-cyber::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    #C042FF,
+    #00C8FF,
+    #FF2E9A,
+    transparent
+  );
+  transform: translateX(-100%);
+  transition: transform 0.5s ease;
+}
+
+.card-cyber:hover {
+  border-color: rgba(192, 66, 255, 0.5);
+  box-shadow: 0 0 30px rgba(192, 66, 255, 0.2),
+              inset 0 0 15px rgba(0, 200, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+.card-cyber:hover::before {
+  transform: translateX(100%);
+}
+
+/* Button styles */
+.btn-cyber {
+  @apply relative overflow-hidden transition-all duration-300;
+  background: linear-gradient(45deg, #C042FF, #00C8FF);
+  border: 1px solid rgba(192, 66, 255, 0.3);
+  box-shadow: 0 0 15px rgba(192, 66, 255, 0.3);
+}
+
+.btn-cyber:hover {
+  box-shadow: 0 0 30px rgba(192, 66, 255, 0.5),
+              inset 0 0 15px rgba(0, 200, 255, 0.5);
+  transform: translateY(-1px);
+}
+
+.btn-cyber::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  background: linear-gradient(45deg, 
+    #C042FF,
+    #00C8FF,
+    #FF2E9A,
+    #C042FF
+  );
+  background-size: 400%;
+  width: calc(100% + 4px);
+  height: calc(100% + 4px);
+  z-index: -1;
+  animation: steam 20s linear infinite;
+}
+
+/* Navigation styles */
+.nav-link-cyber {
+  @apply relative text-gray-400 hover:text-[#C042FF] transition-all duration-300;
+  text-shadow: 0 0 5px rgba(192, 66, 255, 0.5);
+}
+
+.nav-link-cyber::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #C042FF, #00C8FF);
+  transition: width 0.3s ease;
+}
+
+.nav-link-cyber:hover::after {
+  width: 100%;
+}
+
+/* Animations */
+@keyframes steam {
+  0% { background-position: 0 0; }
+  50% { background-position: 400% 0; }
+  100% { background-position: 0 0; }
+}
+
+@keyframes textShift {
+  0% { filter: hue-rotate(0deg); }
+  100% { filter: hue-rotate(360deg); }
+}
+
+@keyframes glitch {
+  0% { transform: translate(0); }
+  20% { transform: translate(-2px, 2px); }
+  40% { transform: translate(-2px, -2px); }
+  60% { transform: translate(2px, 2px); }
+  80% { transform: translate(2px, -2px); }
+  100% { transform: translate(0); }
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0a0a0a;
+  box-shadow: inset 0 0 5px rgba(192, 66, 255, 0.2);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(45deg, #C042FF, #00C8FF);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(45deg, #FF2E9A, #C042FF);
+}
+
+/* Selection */
+::selection {
+  background: #C042FF;
+  color: white;
+  text-shadow: 0 0 8px rgba(192, 66, 255, 0.8);
+}
+
+.dark {
+  --background: 0 0% 3.9%;
+  --foreground: 0 0% 98%;
+  --card: 0 0% 3.9%;
+  --card-foreground: 0 0% 98%;
+  --popover: 0 0% 3.9%;
+  --popover-foreground: 0 0% 98%;
+  --primary: 0 0% 98%;
+  --primary-foreground: 0 0% 9%;
+  --secondary: 0 0% 14.9%;
+  --secondary-foreground: 0 0% 98%;
+  --muted: 0 0% 14.9%;
+  --muted-foreground: 0 0% 63.9%;
+  --accent: 0 0% 14.9%;
+  --accent-foreground: 0 0% 98%;
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 0 0% 98%;
+  --border: 0 0% 14.9%;
+  --input: 0 0% 14.9%;
+  --ring: 0 0% 83.1%;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}

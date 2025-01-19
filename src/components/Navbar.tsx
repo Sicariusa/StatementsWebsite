@@ -17,15 +17,17 @@ export function Navbar() {
   const location = useLocation();
 
   return (
-    <header className="fixed w-full z-50 bg-black/80 backdrop-blur-sm">
-      <nav className="mx-auto flex items-center justify-between p-4">
-        {/* Logo */}
-        <Link to="/" className="text-xl font-bold text-white">
-          STATEMENTS
-        </Link>
-
-        {/* Mobile menu button */}
-        <div className="lg:hidden">
+    <header className="fixed w-full z-50 bg-gradient-to-b from-black/80 to-black/0 backdrop-blur-sm">
+      <nav className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8" aria-label="Global">
+        <div className="flex lg:flex-1">
+          <Link 
+            to="/" 
+            className="font-['EB_Garamond'] text-2xl tracking-wider text-white hover:text-[#4A7B5A] "
+          >
+            STATEMENTS
+          </Link>
+        </div>
+        <div className="flex lg:hidden">
           <button
             type="button"
             className="text-white"
@@ -46,10 +48,7 @@ export function Navbar() {
               key={item.name}
               to={item.href}
               className={({ isActive }) => 
-                cn(
-                  "text-sm font-semibold",
-                  isActive ? "text-amber-500" : "text-gray-300 hover:text-amber-500"
-                )
+                isActive ? "text-amber-500" : "text-gray-300 hover:text-amber-500"
               }
             >
               {item.name}

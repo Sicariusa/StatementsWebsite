@@ -133,35 +133,35 @@ export function Contact() {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0] || null;
-    setSelectedFile(file);
+  // const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   const file = e.target.files?.[0] || null;
+  //   setSelectedFile(file);
     
-    if (file) {
-      if (!validateFile(file)) {
-        setErrors(prev => ({
-          ...prev,
-          file: 'Please upload a PDF file under 5MB'
-        }));
-      } else {
-        // Convert file to base64
-        const base64 = await convertFileToBase64(file);
-        setSelectedFile(file);
-        // Store base64 string in a hidden input for EmailJS
-        const hiddenInput = document.createElement('input');
-        hiddenInput.type = 'hidden';
-        hiddenInput.name = 'pdf_attachment';
-        hiddenInput.value = base64;
-        formRef.current?.appendChild(hiddenInput);
+  //   if (file) {
+  //     if (!validateFile(file)) {
+  //       setErrors(prev => ({
+  //         ...prev,
+  //         file: 'Please upload a PDF file under 5MB'
+  //       }));
+  //     } else {
+  //       // Convert file to base64
+  //       const base64 = await convertFileToBase64(file);
+  //       setSelectedFile(file);
+  //       // Store base64 string in a hidden input for EmailJS
+  //       const hiddenInput = document.createElement('input');
+  //       hiddenInput.type = 'hidden';
+  //       hiddenInput.name = 'pdf_attachment';
+  //       hiddenInput.value = base64;
+  //       formRef.current?.appendChild(hiddenInput);
         
-        setErrors(prev => {
-          const newErrors = { ...prev };
-          delete newErrors.file;
-          return newErrors;
-        });
-      }
-    }
-  };
+  //       setErrors(prev => {
+  //         const newErrors = { ...prev };
+  //         delete newErrors.file;
+  //         return newErrors;
+  //       });
+  //     }
+  //   }
+  // };
 
   const convertFileToBase64 = (file: File): Promise<string> => {
     return new Promise((resolve, reject) => {
