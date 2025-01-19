@@ -20,8 +20,11 @@ export function Navbar() {
     <header className="fixed w-full z-50 bg-gradient-to-b from-black/80 to-black/0 backdrop-blur-sm">
       <nav className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8" aria-label="Global">
         <div className="flex lg:flex-1">
-          <Link to="/" className="-m-1.5 p-1.5 text-xl font-bold text-white">
-            STATEMENTS<span className="text-gold-500"></span>
+          <Link 
+            to="/" 
+            className="font-['EB_Garamond'] text-2xl tracking-wider text-white hover:text-[#4A7B5A] transition-colors"
+          >
+            STATEMENTS
           </Link>
         </div>
         <div className="flex lg:hidden">
@@ -39,7 +42,7 @@ export function Navbar() {
               key={item.name}
               to={item.href}
               className={({ isActive }) => 
-                isActive ? "text-amber-500" : "text-gray-300 hover:text-amber-500"
+                isActive ? "text-[#4A7B5A]" : "text-gray-300 hover:text-[#4A7B5A]"
               }
             >
               {item.name}

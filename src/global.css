@@ -1,0 +1,182 @@
+@import 'mapbox-gl/dist/mapbox-gl.css';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Base colors */
+  --background: 0 0% 0%; /* Pure black */
+  --foreground: 0 0% 100%; /* Pure white */
+  
+  /* Accent colors - sophisticated gold/bronze palette */
+  --accent-primary: 35 40% 45%; /* Muted gold */
+  --accent-primary-hover: 35 40% 40%;
+  --accent-secondary: 30 25% 25%; /* Deep bronze */
+  
+  /* Dark theme specific colors */
+  --card: 0 0% 3%;
+  --card-foreground: 0 0% 100%;
+  --popover: 0 0% 3%;
+  --popover-foreground: 0 0% 100%;
+  --muted: 0 0% 15%;
+  --muted-foreground: 0 0% 65%;
+  --border: 0 0% 15%;
+  --input: 0 0% 15%;
+  
+  /* Status colors */
+  --success: 142 72% 29%;
+  --warning: 35 100% 50%;
+  --error: 0 84% 60%;
+}
+
+/* Custom utility classes */
+.bg-gradient-elegant {
+  background: linear-gradient(
+    135deg,
+    hsl(var(--accent-primary)) 0%,
+    hsl(var(--accent-secondary)) 100%
+  );
+}
+
+.text-gradient-elegant {
+  background: linear-gradient(
+    to right,
+    hsl(var(--foreground)) 0%,
+    hsl(var(--muted-foreground)) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Custom component styles */
+.service-card {
+  @apply relative overflow-hidden border border-transparent transition-all duration-300;
+  background: linear-gradient(to bottom right, rgba(35, 35, 35, 0.5), rgba(10, 10, 10, 0.5));
+  backdrop-filter: blur(10px);
+}
+
+.service-card:hover {
+  border-color: hsl(var(--accent-primary));
+  transform: translateY(-2px);
+}
+
+.service-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    hsl(var(--accent-primary)),
+    transparent
+  );
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.service-card:hover::before {
+  opacity: 1;
+}
+
+/* Button styles */
+.btn-primary {
+  @apply bg-gradient-elegant text-white hover:opacity-90 transition-opacity;
+}
+
+.btn-secondary {
+  @apply bg-[#1a1a1a] border border-[#333] hover:border-[hsl(var(--accent-primary))] transition-colors;
+}
+
+/* Navigation styles */
+.nav-link {
+  @apply text-[#999] hover:text-[hsl(var(--accent-primary))] transition-colors;
+}
+
+.nav-link.active {
+  @apply text-[hsl(var(--accent-primary))];
+}
+
+/* Dialog/Modal styles */
+.dialog-content {
+  @apply bg-gradient-to-b from-[#1a1a1a] to-black border border-[#333];
+}
+
+/* Input styles */
+.input-elegant {
+  @apply bg-[#1a1a1a] border border-[#333] focus:border-[hsl(var(--accent-primary))] transition-colors;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1a1a1a;
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--accent-primary));
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--accent-primary-hover));
+}
+
+/* Animation utilities */
+.hover-lift {
+  transition: transform 0.2s ease-in-out;
+}
+
+.hover-lift:hover {
+  transform: translateY(-2px);
+}
+
+/* Text selection */
+::selection {
+  background: hsl(var(--accent-primary));
+  color: white;
+}
+
+.dark {
+  --background: 0 0% 3.9%;
+  --foreground: 0 0% 98%;
+  --card: 0 0% 3.9%;
+  --card-foreground: 0 0% 98%;
+  --popover: 0 0% 3.9%;
+  --popover-foreground: 0 0% 98%;
+  --primary: 0 0% 98%;
+  --primary-foreground: 0 0% 9%;
+  --secondary: 0 0% 14.9%;
+  --secondary-foreground: 0 0% 98%;
+  --muted: 0 0% 14.9%;
+  --muted-foreground: 0 0% 63.9%;
+  --accent: 0 0% 14.9%;
+  --accent-foreground: 0 0% 98%;
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 0 0% 98%;
+  --border: 0 0% 14.9%;
+  --input: 0 0% 14.9%;
+  --ring: 0 0% 83.1%;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
