@@ -56,81 +56,91 @@ export function Home() {
   const map = useRef<mapboxgl.Map | null>(null);
 
   useEffect(() => {
+    // Check if token exists before initializing map
+    if (!mapboxgl.accessToken) {
+      console.warn('Mapbox token not found. Map will not be rendered.');
+      return;
+    }
+
     if (!map.current && mapContainer.current) {
-      map.current = new mapboxgl.Map({
-        container: mapContainer.current,
-        style: 'mapbox://styles/mapbox/dark-v11',
-        center: [0, 30],
-        zoom: 1.5,
-        projection: 'mercator'
-      });
-
-      map.current.on('load', () => {
-        // Add source for country boundaries
-        map.current?.addSource('countries', {
-          type: 'vector',
-          url: 'mapbox://mapbox.country-boundaries-v1'
+      try {
+        map.current = new mapboxgl.Map({
+          container: mapContainer.current,
+          style: 'mapbox://styles/mapbox/dark-v11',
+          center: [0, 30],
+          zoom: 1.5,
+          projection: 'mercator'
         });
 
-        // Add fill layer for client countries
-        map.current?.addLayer({
-          id: 'country-fills',
-          type: 'fill',
-          source: 'countries',
-          'source-layer': 'country_boundaries',
-          paint: {
-            'fill-color': '#3b82f6',
-            'fill-opacity': [
-              'case',
-              ['in', ['get', 'name_en'], ['literal', clientCountries]],
-              0.4,
-              0
-            ]
-          }
-        });
+        map.current.on('load', () => {
+          // Add source for country boundaries
+          map.current?.addSource('countries', {
+            type: 'vector',
+            url: 'mapbox://mapbox.country-boundaries-v1'
+          });
 
-        // Add outline layer for client countries
-        map.current?.addLayer({
-          id: 'country-borders',
-          type: 'line',
-          source: 'countries',
-          'source-layer': 'country_boundaries',
-          paint: {
-            'line-color': '#60a5fa',
-            'line-width': [
-              'case',
-              ['in', ['get', 'name_en'], ['literal', clientCountries]],
-              2,
-              0
-            ]
-          }
-        });
+          // Add fill layer for client countries
+          map.current?.addLayer({
+            id: 'country-fills',
+            type: 'fill',
+            source: 'countries',
+            'source-layer': 'country_boundaries',
+            paint: {
+              'fill-color': '#3b82f6',
+              'fill-opacity': [
+                'case',
+                ['in', ['get', 'name_en'], ['literal', clientCountries]],
+                0.4,
+                0
+              ]
+            }
+          });
 
-        // Add hover effect
-        map.current?.on('mouseenter', 'country-fills', () => {
-          if (map.current) {
-            map.current.setPaintProperty('country-fills', 'fill-opacity', [
-              'case',
-              ['in', ['get', 'name_en'], ['literal', clientCountries]],
-              0.7,
-              0
-            ]);
-            map.current.getCanvas().style.cursor = 'pointer';
-          }
-        });
+          // Add outline layer for client countries
+          map.current?.addLayer({
+            id: 'country-borders',
+            type: 'line',
+            source: 'countries',
+            'source-layer': 'country_boundaries',
+            paint: {
+              'line-color': '#60a5fa',
+              'line-width': [
+                'case',
+                ['in', ['get', 'name_en'], ['literal', clientCountries]],
+                2,
+                0
+              ]
+            }
+          });
 
-        map.current?.on('mouseleave', 'country-fills', () => {
-          if (map.current) {
-            map.current.setPaintProperty('country-fills', 'fill-opacity', [
-              'case',
-              ['in', ['get', 'name_en'], ['literal', clientCountries]],
-              0.4,
-              0
-            ]);
-            map.current.getCanvas().style.cursor = '';
-          }
+          // Add hover effect
+          map.current?.on('mouseenter', 'country-fills', () => {
+            if (map.current) {
+              map.current.setPaintProperty('country-fills', 'fill-opacity', [
+                'case',
+                ['in', ['get', 'name_en'], ['literal', clientCountries]],
+                0.7,
+                0
+              ]);
+              map.current.getCanvas().style.cursor = 'pointer';
+            }
+          });
+
+          map.current?.on('mouseleave', 'country-fills', () => {
+            if (map.current) {
+              map.current.setPaintProperty('country-fills', 'fill-opacity', [
+                'case',
+                ['in', ['get', 'name_en'], ['literal', clientCountries]],
+                0.4,
+                0
+              ]);
+              map.current.getCanvas().style.cursor = '';
+            }
+          });
         });
-      });
+      } catch (error) {
+        console.error('Error initializing map:', error);
+      }
     }
 
     return () => {
@@ -294,10 +304,16 @@ export function Home() {
             Our Global Presence
           </h2>
           
-          <div 
-            ref={mapContainer} 
-            className="w-full h-[600px] rounded-lg overflow-hidden border border-gray-800"
-          />
+          {mapboxgl.accessToken ? (
+            <div 
+              ref={mapContainer} 
+              className="w-full h-[600px] rounded-lg overflow-hidden border border-gray-800"
+            />
+          ) : (
+            <div className="w-full h-[600px] rounded-lg overflow-hidden border border-gray-800 flex items-center justify-center bg-black/50">
+              <p className="text-gray-400">Map visualization temporarily unavailable</p>
+            </div>
+          )}
 
           {/* Client Country Legend */}
           <div className="mt-8 grid grid-cols-3 gap-4 max-w-2xl mx-auto">
