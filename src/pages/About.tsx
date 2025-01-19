@@ -57,7 +57,7 @@ export function About() {
           transition={{ duration: 0.8 }}
           className="text-center mb-16"
         >
-          <h1 className="text-5xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400">
+          <h1 className="text-5xl font-bold mb-6 text-gradient-futuristic">
             About Us
           </h1>
           <p className="text-xl text-gray-400 max-w-3xl mx-auto">
@@ -119,9 +119,9 @@ export function About() {
             {values.map((value) => (
               <Card
                 key={value.title}
-                className="p-6 bg-black/50 border-gray-800 hover:border-amber-500 transition-all duration-300"
+                className="card-hover-effect p-6"
               >
-                <value.icon className="w-12 h-12 mb-4 text-amber-500" />
+                <value.icon className="w-12 h-12 mb-4 text-[#0066FF]" />
                 <h3 className="text-xl font-bold mb-2 text-white">{value.title}</h3>
                 <p className="text-gray-400">{value.description}</p>
               </Card>
@@ -139,7 +139,7 @@ export function About() {
             {team.map((member) => (
               <Card
                 key={member.name}
-                className="p-6 bg-black/50 border-gray-800 hover:border-amber-500 transition-all duration-300"
+                className="card-hover-effect p-6"
               >
                 <div className="aspect-square mb-4 rounded-full overflow-hidden">
                   <img

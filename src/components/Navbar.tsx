@@ -22,7 +22,7 @@ export function Navbar() {
         <div className="flex lg:flex-1">
           <Link 
             to="/" 
-            className="font-['EB_Garamond'] text-2xl tracking-wider text-white hover:text-[#4A7B5A] transition-colors"
+            className="font-['EB_Garamond'] text-2xl tracking-wider text-white hover:text-[#4A7B5A] "
           >
             STATEMENTS
           </Link>
@@ -42,7 +42,7 @@ export function Navbar() {
               key={item.name}
               to={item.href}
               className={({ isActive }) => 
-                isActive ? "text-[#4A7B5A]" : "text-gray-300 hover:text-[#4A7B5A]"
+                isActive ? "text-[#4A7B5A]" : "text-gray-300 hover:text-[#4A7B5A] nav-link-cyber"
               }
             >
               {item.name}

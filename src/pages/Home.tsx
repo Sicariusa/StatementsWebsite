@@ -56,91 +56,81 @@ export function Home() {
   const map = useRef<mapboxgl.Map | null>(null);
 
   useEffect(() => {
-    // Check if token exists before initializing map
-    if (!mapboxgl.accessToken) {
-      console.warn('Mapbox token not found. Map will not be rendered.');
-      return;
-    }
-
     if (!map.current && mapContainer.current) {
-      try {
-        map.current = new mapboxgl.Map({
-          container: mapContainer.current,
-          style: 'mapbox://styles/mapbox/dark-v11',
-          center: [0, 30],
-          zoom: 1.5,
-          projection: 'mercator'
+      map.current = new mapboxgl.Map({
+        container: mapContainer.current,
+        style: 'mapbox://styles/mapbox/dark-v11',
+        center: [0, 30],
+        zoom: 1.5,
+        projection: 'mercator'
+      });
+
+      map.current.on('load', () => {
+        // Add source for country boundaries
+        map.current?.addSource('countries', {
+          type: 'vector',
+          url: 'mapbox://mapbox.country-boundaries-v1'
         });
 
-        map.current.on('load', () => {
-          // Add source for country boundaries
-          map.current?.addSource('countries', {
-            type: 'vector',
-            url: 'mapbox://mapbox.country-boundaries-v1'
-          });
-
-          // Add fill layer for client countries
-          map.current?.addLayer({
-            id: 'country-fills',
-            type: 'fill',
-            source: 'countries',
-            'source-layer': 'country_boundaries',
-            paint: {
-              'fill-color': '#3b82f6',
-              'fill-opacity': [
-                'case',
-                ['in', ['get', 'name_en'], ['literal', clientCountries]],
-                0.4,
-                0
-              ]
-            }
-          });
-
-          // Add outline layer for client countries
-          map.current?.addLayer({
-            id: 'country-borders',
-            type: 'line',
-            source: 'countries',
-            'source-layer': 'country_boundaries',
-            paint: {
-              'line-color': '#60a5fa',
-              'line-width': [
-                'case',
-                ['in', ['get', 'name_en'], ['literal', clientCountries]],
-                2,
-                0
-              ]
-            }
-          });
-
-          // Add hover effect
-          map.current?.on('mouseenter', 'country-fills', () => {
-            if (map.current) {
-              map.current.setPaintProperty('country-fills', 'fill-opacity', [
-                'case',
-                ['in', ['get', 'name_en'], ['literal', clientCountries]],
-                0.7,
-                0
-              ]);
-              map.current.getCanvas().style.cursor = 'pointer';
-            }
-          });
-
-          map.current?.on('mouseleave', 'country-fills', () => {
-            if (map.current) {
-              map.current.setPaintProperty('country-fills', 'fill-opacity', [
-                'case',
-                ['in', ['get', 'name_en'], ['literal', clientCountries]],
-                0.4,
-                0
-              ]);
-              map.current.getCanvas().style.cursor = '';
-            }
-          });
+        // Add fill layer for client countries
+        map.current?.addLayer({
+          id: 'country-fills',
+          type: 'fill',
+          source: 'countries',
+          'source-layer': 'country_boundaries',
+          paint: {
+            'fill-color': '#3b82f6',
+            'fill-opacity': [
+              'case',
+              ['in', ['get', 'name_en'], ['literal', clientCountries]],
+              0.4,
+              0
+            ]
+          }
         });
-      } catch (error) {
-        console.error('Error initializing map:', error);
-      }
+
+        // Add outline layer for client countries
+        map.current?.addLayer({
+          id: 'country-borders',
+          type: 'line',
+          source: 'countries',
+          'source-layer': 'country_boundaries',
+          paint: {
+            'line-color': '#60a5fa',
+            'line-width': [
+              'case',
+              ['in', ['get', 'name_en'], ['literal', clientCountries]],
+              2,
+              0
+            ]
+          }
+        });
+
+        // Add hover effect
+        map.current?.on('mouseenter', 'country-fills', () => {
+          if (map.current) {
+            map.current.setPaintProperty('country-fills', 'fill-opacity', [
+              'case',
+              ['in', ['get', 'name_en'], ['literal', clientCountries]],
+              0.7,
+              0
+            ]);
+            map.current.getCanvas().style.cursor = 'pointer';
+          }
+        });
+
+        map.current?.on('mouseleave', 'country-fills', () => {
+          if (map.current) {
+            map.current.setPaintProperty('country-fills', 'fill-opacity', [
+              'case',
+              ['in', ['get', 'name_en'], ['literal', clientCountries]],
+              0.4,
+              0
+            ]);
+            map.current.getCanvas().style.cursor = '';
+          }
+        });
+      });
     }
 
     return () => {
@@ -181,7 +171,7 @@ export function Home() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="text-7xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-white to-white"
+            className="text-7xl font-bold mb-6 text-gradient-futuristic"
           >
             Elevate Your Financial Future
           </motion.h1>
@@ -219,8 +209,8 @@ export function Home() {
                   <AreaChart data={performanceData}>
                     <defs>
                       <linearGradient id="colorRevenue" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="#60A5FA" stopOpacity={0.8}/>
-                        <stop offset="95%" stopColor="#60A5FA" stopOpacity={0}/>
+                        <stop offset="5%" stopColor="#0066FF" stopOpacity={0.8}/>
+                        <stop offset="95%" stopColor="#0066FF" stopOpacity={0}/>
                       </linearGradient>
                       <linearGradient id="colorGrowth" x1="0" y1="0" x2="0" y2="1">
                         <stop offset="5%" stopColor="#C084FC" stopOpacity={0.8}/>
@@ -240,7 +230,7 @@ export function Home() {
                     <Area
                       type="monotone"
                       dataKey="revenue"
-                      stroke="#60A5FA"
+                      stroke="#0066FF"
                       fillOpacity={1}
                       fill="url(#colorRevenue)"
                     />
@@ -272,7 +262,7 @@ export function Home() {
                       }}
                     />
                     <Legend />
-                    <Bar dataKey="stocks" fill="#60A5FA" />
+                    <Bar dataKey="stocks" fill="#0066FF" />
                     <Bar dataKey="bonds" fill="#C084FC" />
                     <Bar dataKey="crypto" fill="#818CF8" />
                   </BarChart>
@@ -286,9 +276,9 @@ export function Home() {
             {stats.map((stat) => (
               <Card
                 key={stat.label}
-                className="p-6 bg-black/50 border-gray-800 hover:border-blue-500 transition-colors"
+                className="card-hover-effect p-6"
               >
-                <stat.icon className="w-8 h-8 mb-4 text-blue-500" />
+                <stat.icon className="w-8 h-8 mb-4 text-[#0066FF]" />
                 <h3 className="text-3xl font-bold mb-2 text-white">{stat.value}</h3>
                 <p className="text-gray-300">{stat.label}</p>
               </Card>
@@ -304,16 +294,10 @@ export function Home() {
             Our Global Presence
           </h2>
           
-          {mapboxgl.accessToken ? (
-            <div 
-              ref={mapContainer} 
-              className="w-full h-[600px] rounded-lg overflow-hidden border border-gray-800"
-            />
-          ) : (
-            <div className="w-full h-[600px] rounded-lg overflow-hidden border border-gray-800 flex items-center justify-center bg-black/50">
-              <p className="text-gray-400">Map visualization temporarily unavailable</p>
-            </div>
-          )}
+          <div 
+            ref={mapContainer} 
+            className="w-full h-[600px] rounded-lg overflow-hidden border border-gray-800"
+          />
 
           {/* Client Country Legend */}
           <div className="mt-8 grid grid-cols-3 gap-4 max-w-2xl mx-auto">
