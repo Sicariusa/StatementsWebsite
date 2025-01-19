@@ -6,11 +6,19 @@ import { Home } from './pages/Home';
 import { Services } from './pages/Services';
 import { Clients } from './pages/Clients';
 import { Analytics } from "@vercel/analytics/react"
+import './styles/premium.css';
+import './styles/statements.css';
+import './styles/modern.css';
+import './styles/cyberpunk.css';
+import { ThemeSwitcher } from './components/ThemeSwitcher';
+
 
 export default function App() {
   return (
     <BrowserRouter>
       <Analytics />
+     
+      <ThemeSwitcher />
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />

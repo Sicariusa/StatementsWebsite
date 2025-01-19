@@ -19,8 +19,8 @@ export function ServiceCard({ service }: ServiceCardProps) {
 
   return (
     <>
-      <div className="card-cyber p-6">
-        <service.icon className="w-12 h-12 text-[#C042FF] mb-4" />
+      <div className="card-premium hover-float p-6">
+        <service.icon className="w-12 h-12 text-[hsl(var(--accent-primary))] mb-4" />
         <h3 className="text-xl font-semibold text-white mb-3">{service.title}</h3>
         <p className="text-gray-400 mb-4">{service.description}</p>
         <ul className="space-y-2 mb-6">
@@ -33,7 +33,7 @@ export function ServiceCard({ service }: ServiceCardProps) {
         </ul>
         <Button 
           onClick={() => setIsOpen(true)}
-          className="btn-cyber w-full bg-[#4A7B5A] hover:bg-[#3A6348] text-white transition-colors"
+          className="btn-premium w-full"
         >
           Learn More
         </Button>

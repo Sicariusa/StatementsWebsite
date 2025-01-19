@@ -1,0 +1,55 @@
+/* Modern/Futuristic Theme */
+:root[data-theme="modern"] {
+  --background: 0 0% 0%;
+  --foreground: 0 0% 100%;
+  --accent-primary: 210 100% 50%;
+  --accent-secondary: 199 89% 48%;
+  --accent-tertiary: 213 94% 68%;
+  --card: 220 40% 2%;
+  --card-foreground: 0 0% 100%;
+  --popover: 220 40% 2%;
+  --popover-foreground: 0 0% 100%;
+  --muted: 220 40% 15%;
+  --muted-foreground: 220 10% 75%;
+  --border: 220 40% 15%;
+  --input: 220 40% 15%;
+}
+
+[data-theme="modern"] .bg-gradient-theme {
+  background: linear-gradient(
+    135deg,
+    hsl(220, 100%, 15%),
+    hsl(220, 100%, 2%)
+  );
+}
+
+[data-theme="modern"] .text-gradient-theme {
+  background: linear-gradient(
+    to right,
+    hsl(210, 100%, 50%),
+    hsl(199, 89%, 48%)
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+[data-theme="modern"] .card-effect {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  border: 1px solid transparent;
+  background: linear-gradient(145deg, rgba(30, 41, 59, 0.4), rgba(15, 23, 42, 0.7));
+  backdrop-filter: blur(10px);
+}
+
+[data-theme="modern"] .card-effect:hover {
+  border-color: #0066FF;
+  box-shadow: 0 0 20px rgba(0, 102, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+[data-theme="modern"] .btn-theme {
+  @apply bg-[#0066FF] hover:bg-[#1E90FF] text-white transition-all duration-300;
+  box-shadow: 0 0 15px rgba(0, 102, 255, 0.3);
+} 

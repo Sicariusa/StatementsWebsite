@@ -1,0 +1,179 @@
+/* Statements Corporate Theme */
+:root[data-theme="statements"] {
+  /* Core colors based on company green */
+  --background: 120 15% 7%; /* Deep green-black */
+  --foreground: 0 0% 100%;
+  --accent-primary: 120 30% 45%; /* Corporate green #4A7B5A */
+  --accent-secondary: 120 25% 35%; /* Darker green #385C44 */
+  --accent-tertiary: 120 20% 90%; /* Light green for highlights */
+  
+  /* UI colors */
+  --card: 120 15% 10%;
+  --card-foreground: 0 0% 100%;
+  --muted: 120 10% 20%;
+  --muted-foreground: 120 5% 65%;
+  --border: 120 15% 20%;
+  --input: 120 15% 20%;
+}
+
+/* Elegant animations */
+@keyframes borderGlow {
+  0% { border-color: rgba(74, 123, 90, 0.3); }
+  50% { border-color: rgba(74, 123, 90, 0.6); }
+  100% { border-color: rgba(74, 123, 90, 0.3); }
+}
+
+@keyframes subtleFloat {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+  100% { transform: translateY(0); }
+}
+
+/* Corporate card styling */
+[data-theme="statements"] .card-premium {
+  background: linear-gradient(
+    165deg,
+    hsl(120 15% 12%),
+    hsl(120 15% 8%)
+  );
+  border: 1px solid rgba(74, 123, 90, 0.2);
+  backdrop-filter: blur(10px);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+[data-theme="statements"] .card-premium:hover {
+  transform: translateY(-5px);
+  border-color: rgba(74, 123, 90, 0.5);
+  box-shadow: 
+    0 10px 30px -10px rgba(74, 123, 90, 0.3),
+    0 0 0 1px rgba(74, 123, 90, 0.2);
+  animation: borderGlow 2s infinite;
+}
+
+/* Button styles */
+[data-theme="statements"] .btn-premium {
+  background: linear-gradient(
+    135deg,
+    #4A7B5A,
+    #385C44
+  );
+  border: none;
+  position: relative;
+  transition: all 0.3s ease;
+  overflow: hidden;
+  box-shadow: 0 4px 15px -3px rgba(74, 123, 90, 0.2);
+}
+
+[data-theme="statements"] .btn-premium:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 25px -5px rgba(74, 123, 90, 0.4);
+  background: linear-gradient(
+    135deg,
+    #5C8F6C,
+    #4A7B5A
+  );
+}
+
+/* Text gradients */
+[data-theme="statements"] .text-gradient-premium {
+  background: linear-gradient(
+    135deg,
+    #4A7B5A,
+    #6CA17D
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Navigation link effects */
+[data-theme="statements"] .nav-link-premium {
+  position: relative;
+  color: hsl(120 5% 65%);
+  transition: color 0.3s ease;
+}
+
+[data-theme="statements"] .nav-link-premium::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    #4A7B5A,
+    #385C44
+  );
+  transition: width 0.3s ease;
+}
+
+[data-theme="statements"] .nav-link-premium:hover {
+  color: white;
+}
+
+[data-theme="statements"] .nav-link-premium:hover::after {
+  width: 100%;
+}
+
+/* Section backgrounds */
+[data-theme="statements"] .section-gradient {
+  background: linear-gradient(
+    165deg,
+    hsl(120 15% 12%),
+    hsl(120 15% 7%),
+    hsl(120 15% 5%)
+  );
+}
+
+/* Scrollbar styling */
+[data-theme="statements"] ::-webkit-scrollbar {
+  width: 8px;
+}
+
+[data-theme="statements"] ::-webkit-scrollbar-track {
+  background: hsl(120 15% 7%);
+}
+
+[data-theme="statements"] ::-webkit-scrollbar-thumb {
+  background: linear-gradient(
+    #4A7B5A,
+    #385C44
+  );
+  border-radius: 4px;
+}
+
+[data-theme="statements"] ::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(
+    #5C8F6C,
+    #4A7B5A
+  );
+}
+
+/* Selection styling */
+[data-theme="statements"] ::selection {
+  background: #4A7B5A;
+  color: white;
+}
+
+/* Stats and numbers */
+[data-theme="statements"] .animate-value {
+  color: #4A7B5A;
+  text-shadow: 0 0 10px rgba(74, 123, 90, 0.3);
+  transition: color 0.3s ease;
+}
+
+/* Card hover animations */
+[data-theme="statements"] .hover-float {
+  transition: all 0.3s ease;
+}
+
+[data-theme="statements"] .hover-float:hover {
+  animation: subtleFloat 2s infinite ease-in-out;
+}
+
+/* Focus states */
+[data-theme="statements"] *:focus {
+  outline: 2px solid rgba(74, 123, 90, 0.5);
+  outline-offset: 2px;
+} 
